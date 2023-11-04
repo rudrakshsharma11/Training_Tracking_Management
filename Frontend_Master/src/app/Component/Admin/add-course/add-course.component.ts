@@ -27,6 +27,8 @@ export class AddCourseComponent implements OnInit {
   popupInput: string = '';
   secondPopupInput: string = '';
 
+  fish:string='';
+
   // Input field values
   field1Value: string = '';
   field2Value: string = '';
