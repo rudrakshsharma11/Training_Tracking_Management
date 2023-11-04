@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            style="font-weight: 550; background-color: rgba(238, 244, 251, 255)"
+          >
+            Code <i class="fa fa-sort" aria-hidden="true"></i>
+          </th>
+          <th
+            scope="col"
+            style="font-weight: 550; background-color: rgba(238, 244, 251, 255)"
+          >
+            Course Name <i class="fa fa-sort" aria-hidden="true"></i>
+          </th>
+          <th
+            scope="col"
+            style="font-weight: 550; background-color: rgba(238, 244, 251, 255)"
+          >
+            Topic Completed <i class="fa fa-sort" aria-hidden="true"></i>
+          </th>
+          <th
+            scope="col"
+            style="font-weight: 550; background-color: rgba(238, 244, 251, 255)"
+          >
+            Topic in Progress <i class="fa fa-sort" aria-hidden="true"></i>
+          </th>
+          <th
+            scope="col"
+            style="font-weight: 550; background-color: rgba(238, 244, 251, 255)"
+          >
+            Course Completion Percentage
+            <i class="fa fa-sort" aria-hidden="true"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of coursedatamain1; let i = index">
+          <td>{{ person.course.courseCode }}</td>
+          <td>{{ person.course.courseName }}</td>
+          <td>
+            <div style="display: flex">
+              <div
+                *ngFor="
+                  let person2 of person.topicsWithStatus.completeTopics;
+                  let i = index
+                "
+                style=" width: 150px"
+              >
+                <p>
+                  {{ person2?.topicName?person2?.topicName:"NA" }}
+                </p>
+              </div>
+            </div>
+          </td>
+          <!-- <td></td> -->
+          <td>
+            <div style="display: flex">
+              <div
+                *ngFor="
+                  let person1 of person.topicsWithStatus.incompleteTopics;
+                  let i = index
+                "
+                style=" width: 120px"
+              >
+                <p>
+                  {{ person1.topicName }}
+                </p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex">
+              <div
+                *ngFor="
+                  let person3 of person.topicsWithStatus.courseCompletionPercentage;
+                  let i = index
+                "
+                style=" width: 150px"
+              >
+                <p>
+                  {{ person3.topicPercentageCompleted }}
+                </p>
+              </div>
+            </div>
+          </td>
+          <!-- <td>add topic</td>  -->
+        </tr>
+      </tbody>
+    </table>
+ 
+    <script src="" async defer></script>
+  </body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>
+      <div *ngIf="isFormVisible" class="course-form">
+        <table>
+          <tr>
+            <th>Actions</th>
+
+            <th style="position: relative; left: 20px">
+              Exam Name
+              <i style="color: #000000">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1em"
+                  viewBox="0 0 320 512"
+                >
+                  <path
+                    d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                  />
+                </svg>
+              </i>
+            </th>
+
+            <th style="position: relative; left: 43px">Total Marks</th>
+
+            <th style="position: relative; left: 39px">
+              Date
+
+              <i style="color: #000000">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1em"
+                  viewBox="0 0 320 512"
+                >
+                  <path
+                    d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                  />
+                </svg>
+              </i>
+            </th>
+
+            <th style="position: relative; left: 35px">Time</th>
+
+            <th style="position: relative; left: 0px">
+              Files
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                />
+              </svg>
+            </th>
+
+            <!-- <th style="position: relative;left: 13px;">Topic</th> -->
+
+            <!-- <th style="position: relative;left: 13px;">Course</th> -->
+          </tr>
+
+          <tr style="position: relative; top: 15px">
+            <td>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Check-up"
+                (click)="submitTableData()"
+                (click)="toggleForm()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Wrong-up"
+                (click)="toggleForm()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+            </td>
+
+            <td>
+              <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="field1Value"
+                placeholder="Enter code"
+              />
+            </td>
+
+            <td>
+              <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="field2Value"
+                placeholder="Enter Course Name"
+              />
+            </td>
+
+            <td>
+              <input
+                type="date"
+                class="custom-form-field"
+                [(ngModel)]="field3Value"
+                style="width: 155px; height: 35px"
+              />
+            </td>
+
+            <td>
+              <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="field4Value"
+                placeholder="0 hr"
+              />
+            </td>
+
+            <td>
+              <button style="border: none">
+                <img
+                  src="../../../../assets/upload.png"
+                  style="width: 20px; height: 20px; background-color: white"
+                  alt=""
+                  (click)="openUploadModal()"
+                />
+              </button>
+            </td>
+
+            <!-- <td>
+
+            <select [(ngModel)]="selectedDropdownValue">
+
+              <option value="" disabled selected>Select Course</option>
+
+              <option *ngFor="let option of dropdownOptions" [value]="option.value">{{ option.label }}</option>
+
+            </select>
+
+ 
+
+          </td> -->
+          </tr>
+        </table>
+      </div>
+
+      <!-- Modal for uploading files -->
+
+      <div class="modal" *ngIf="isUploadModalVisible">
+        <div class="modal-dialog" style="margin-left: 370px">
+          <div class="modal-content" style="width: 800px; height: 500px">
+            <!-- Header -->
+
+            <div class="modal-header">
+              <h1 class="modal-title">Upload Files</h1>
+
+              <button
+                type="button"
+                class="close"
+                (click)="closeUploadModal()"
+                style="border: none; background-color: aliceblue"
+              >
+                <span style="font-size: 30px">&times;</span>
+              </button>
+            </div>
+
+            <!-- Body -->
+
+            <div class="modal-body">
+              <div
+                class="middlepart"
+                style="
+                  margin-top: 20px;
+                  height: 150px;
+                  width: auto;
+                  border-radius: 1%;
+                  border-style: dotted;
+                  background-color: rgb(229, 243, 243);
+                  padding-top: 80px;
+                "
+              >
+                <h1 style="text-align: center; margin-top: -26px">
+                  Drag & Drop your Files or
+
+                  <!-- Replace the hyperlink with a custom file input styled as a button -->
+
+                  <label for="fileInput" class="custom-file-upload">
+                    Upload
+
+                    <input
+                      type="file"
+                      required
+                      (change)="handleFileUpload($event)"
+                      id="fileInput"
+                      style="display: none"
+                    />
+                  </label>
+                </h1>
+              </div>
+
+              <h2
+                class="my-2"
+                style="text-align: center; position: relative; top: 23px"
+              >
+                (Supported format: pdf, (Max Size 2 MB))
+              </h2>
+            </div>
+
+            <!-- Footer -->
+
+            <div class="modal-footer">
+              <div class="modal-footer">
+                <button class="btn btn-primary" (click)="closeUploadModal()">
+                  Upload
+                </button>
+
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="closeUploadModal()"
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <!--button class="btn btn-primary">Upload</button>
+
+            <button class="btn btn-outline-primary" (click)="closeUploadModal()">Cancel</button-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="isPopupVisible" class="popup">
+
+    <div class="popup-content">
+
+      <input type="text" [(ngModel)]="popupInput" placeholder="Enter value">
+
+ 
+
+      <button (click)="submitPopup()">Submit</button>
+
+      <button (click)="closePopup()">Cancel</button>
+
+    </div>
+
+  </div> -->
+
+      <!-- Add an *ngIf directive to conditionally display the table header -->
+
+      <!-- <div style="margin-top: 12px;" [ngStyle]="{'display': people.length > 0 ? 'block' : 'none'}">
+
+  <table class="horizontal-table">
+
+    <thead>
+
+      <tr>
+
+        <th>Action</th>
+
+        <th>Assignment</th>
+
+        <th>Total Marks</th>
+
+        <th>Date</th>
+
+        <th>Time</th>
+
+        <th>Files</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let person of people; let i = index">
+
+        <td>
+
+          <mat-icon class="mat-icon-main" svgIcon="Edit-up" (click)="editItem(i)" aria-hidden="false"
+
+            aria-label="Toggle Password Visibility"></mat-icon>
+
+          <mat-icon class="mat-icon-main" svgIcon="Del-up" (click)="deleteItem(i)" aria-hidden="false"
+
+            aria-label="Toggle Password Visibility" style="margin-left: 10px;"></mat-icon>
+
+          <a href="https://www.example.com" style="margin-left: 25px;">student table</a>
+
+        </td>
+
+        <td>{{ person.input1 }}</td>
+
+        <td>{{ person.input2 }}</td>
+
+        <td>{{ person.input3 }}</td>
+
+        <td>{{ person.input4 }}</td>
+
+        <td>{{ person.file_name }}</td>
+
+ 
+
+        <td>
+
+          <img src="../../../../assets/upload.png" style="width: 20px; height: 20px; background-color: white;">
+
+          {{ person.selectedFileName }}
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div> -->
+
+      <div
+        style="margin-top: 12px"
+        [ngStyle]="{ display: people.length > 0 ? 'block' : 'none' }"
+      >
+        <table class="horizontal-table">
+          <thead>
+            <tr>
+              <th style="width: 300px">Action</th>
+
+              <th style="width: 300px">Exam Name</th>
+
+              <th style="width: 300px">Total Marks</th>
+
+              <th style="width: 300px">Date</th>
+
+              <th style="width: 300px">Time</th>
+
+              <th style="width: 300px">Files</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let person of people; let i = index">
+              <td>
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Edit-up"
+                  (click)="editItem(i)"
+                  (click)="toggleForm()"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                ></mat-icon>
+
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Del-up"
+                  (click)="deleteItem(i)"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                  style="margin-left: 10px"
+                ></mat-icon>
+
+                <a
+                href="javascript:void(0);"
+                  style="margin-left: 15px"
+                  (click)="toggleTableVisibility()"
+                  >Student Table</a
+                >
+              </td>
+
+              <td>{{ person.input1 }}</td>
+
+              <td>{{ person.input2 }}</td>
+
+              <td>{{ person.input3 }}</td>
+
+              <td>{{ person.input4 }}</td>
+
+              <td>{{ person.file_name }}</td>
+
+              <td>
+                <img
+                  src="../../../../assets/upload.png"
+                  style="
+                    width: 20px;
+                    height: 20px;
+                    background-color: white;
+                    vertical-align: middle;
+                  "
+                />
+
+                {{ person.selectedFileName }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <table class="striped-table" *ngIf="isTableVisible">
+      <thead>
+        <tr>
+          <th>Student</th>
+
+          <th>
+            <span style="margin-top: 30px">Marks</span>
+
+            <div class="d-flex justify-content-end">
+              <button
+                (click)="cancelEditing()"
+                class="btn btn-light"
+                style="color: blue"
+              >
+                Cancel
+              </button>
+
+              <button
+                (click)="saveChanges()"
+                (click)="cancelEditing()"
+                class="btn btn-primary btn-light"
+              >
+                Save & close
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let student of students; let i = index">
+          <td>
+            <span>{{ student.name }}</span>
+          </td>
+
+          <td>
+            <span>{{ student.marks }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+

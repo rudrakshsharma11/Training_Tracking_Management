@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="add-students.component.css">
+</head>
+ 
+<body style="background-color: rgb(175, 173, 173);">
+    <div>
+        <app-navabr></app-navabr>
+    </div>
+    <div class="container">
+        <div style="width: 100%;height: 130px ;background-color:  rgb(215, 215, 250);
+        position: relative;top: 17px;border-radius: 5px;display: flex;justify-content: space-evenly;">
+            <div style="background-color: purple;">
+                <input type="text" placeholder="Search"
+                    style="width: 270px;height: 43px;position: absolute;left: 20px;top: 25px;
+                    border: 1px solid black; border-radius: 8px;padding: 13px;font-size: 15px;font-family: sans-serif;">
+                <button
+                    style="position: absolute;right: 10px;top: 26px;padding: 6px;margin-top: 3px;width: 140px;height: 43px;border-radius: 10px;"
+                    (click)="toggleForm()">Add Student</button>
+ 
+            </div>
+            <div style="position: absolute;bottom: 0;left: 50px;margin-bottom: 10px;width: 91%; height: 36px;">
+                <span style="color: black;font-size: 15px;font-family: sans-serif;font-weight: 300;">Please add a course
+                    to see content</span>
+            </div>
+ 
+            <div>
+ 
+                <div *ngIf="isFormVisible" class="course-form">
+ 
+                    <table>
+                        <tr>
+                            <th>Action</th>
+                            <th style="position: relative;left: 66px;">Student Code</th>
+                            <th style="position: relative;left: 43px;">Student Name</th>
+                            <th style="position: relative;left: 39px;">Email ID</th>
+ 
+ 
+                        </tr>
+                        <tr style="position: relative;top: 15px;">
+                            <td><mat-icon class="mat-icon-main" svgIcon="Check-up" (click)="submitTableData();toggleForm()"
+                                    aria-hidden="false" aria-label="Toggle Password Visibility"></mat-icon>
+                                <mat-icon class="mat-icon-main" svgIcon="Wrong-up" (click)="toggleForm()"
+                                    aria-hidden="false" aria-label="Toggle Password Visibility"></mat-icon>
+ 
+                            </td>
+                            <td><input type="text" style="position: relative;width: 177px;height: 35px;border-radius: 5px;
+                                    border: 1px solid black;text-align: center;" [(ngModel)]="field1Value"
+                                    placeholder="Enter code"></td>
+                         
+                            <td><input type="text" style="position: relative;width: 177px;height: 35px;border-radius: 5px;
+                                border: 1px solid black;text-align: center;" [(ngModel)]="field2Value"
+                                placeholder="Enter Name"></td>
+                            <td><input type="text" style="position: relative;width: 177px;height: 35px;border-radius: 5px;
+                                    border: 1px solid black;text-align: center;" [(ngModel)]="field3Value"
+                                    placeholder="Enter Email"></td>
+ 
+                        </tr>
+                    </table>
+                     <!-- <div style="position: relative;" *ngIf="isDropdownVisible">
+                        <div style="position:absolute; bottom:0px; top: 3px; left: 38%; background-color: aqua; width: 177px;
+                        ">
+                             <mat-select [(ngModel)]="selectedCourse" >
+                              <mat-option *ngFor="let course of courses" [value]="course">{{ course }}</mat-option>
+                          </mat-select>
+                            <div *ngFor="let course of courses" style="background-color: white;">
+                                <div style="height: 36px; display: flex; flex-direction: column; gap: 2px; cursor: pointer;"
+                                    (click)="selectedValue(course)">
+                                    {{ course }}
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>  -->
+ 
+                </div>
+            </div>
+ 
+        </div>
+ 
+ 
+        <div style="margin-top: 170px;" [ngStyle]="{ display: 'block' }">
+            <table class="horizontal-table">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Student Code</th>
+                        <th>Student Name</th>
+                        <th>Email ID</th>
+ 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let person of ApiData; let i = index">
+                        <td>
+                            <mat-icon class="mat-icon-main" svgIcon="Edit-up" (click)="editItem(person.studentId);toggleForm()" aria-hidden="false"
+                                aria-label="Toggle Password Visibility"></mat-icon>
+                            <mat-icon class="mat-icon-main" svgIcon="Del-up" (click)="deleteItem(person.studentId
+                            )" aria-hidden="false"
+                                aria-label="Toggle Password Visibility"></mat-icon>
+                        </td>
+                        <td>{{ person.studentCode}}</td>
+                        <td>{{ person.studentName}}</td>
+                        <td>{{ person.studentEmail}}</td>
+ 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+ 
+    </div>
+</body>
+ 
+</html>

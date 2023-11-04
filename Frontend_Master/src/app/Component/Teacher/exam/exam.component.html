@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <title></title>
+  </head>
+
+  <body style="background-color: rgba(238, 244, 251, 255)">
+    <div>
+      <app-navbar></app-navbar>
+    </div>
+
+    <div class="content" style="background-color: rgba(238, 244, 251, 255)">
+      <h4 style="margin-left: 110px; margin-top: 15px">Exams ></h4>
+
+      <div
+        class="container"
+        style="
+          background-color: rgba(255, 255, 255, 255);
+
+          width: 100%;
+
+          height: 100%;
+        "
+      >
+        <div class="container">
+          <div class="row">
+            <div
+              class="upper my-3"
+              style="width: 100%; background-color: #e9f1f8"
+            >
+              <h4
+                style="font-weight: bolder; margin-left: 50px; margin-top: 15px"
+              >
+                Please select the options below to get results
+              </h4>
+
+              <div class="upper my-2">
+                <form
+                  action=""
+                  style="display: inline-flex; margin-bottom: 20px"
+                >
+                  <div class="form-group mx-5">
+                    <div class="position-relative">
+                      <select
+                        class="form-control"
+                        #form
+                        (change)="Click(form.value);batchDateClick()"
+                        id="example1"
+                        style="width: 230px"
+                      >
+                        <option *ngFor="let batch of batchdata"  [value]="batch.batchId"><p  style="background-color: red; width: 100%;"
+                          >{{ batch.batchCode }}: {{ batch.batchName }}</p></option>
+                       
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group mx-4" *ngIf="form2">
+                    <div style="width: 200px; border: 1px solid black; height:36px; display: flex; justify-content: center; align-items: center;">
+                      <p class="" style="height: 100%;
+                      margin-top: 10px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      margin-left: -35px;">
+                       {{batchName}}
+                      </p>
+                   </div>
+                  </div>
+
+                  <div class="form-group mx-5" *ngIf="form3">
+                    <div class="position-relative">
+                      <select class="form-control" #form (change)="Click2(form.value);programDateClick()"
+                          id="example2" style="width: 205px">
+                          <option *ngFor="let program of programdata"  [value]="program.programId"><p  style="background-color: red; width: 100%;"
+                              >{{ program.programCode }}: {{ program.programName }}</p></option>
+                      </select>
+                      <i class="fa fa-chevron-down select-arrow"></i>
+                  </div>
+                  </div>
+
+                  <div class="form-group mx-4" *ngIf="form4">
+                    <div class="position-relative">
+                      <select class="form-control" #form (change)="Click3(form.value);courseDateClick()"
+                      id="example3" style="width: 213px">
+                      <option *ngFor="let course of coursedata"  [value]="course.courseId
+                      "><p  style="background-color: red; width: 100%;"
+                          >{{ course.courseCode}}: {{ course.courseName }}</p></option>
+                  </select>
+                      <i class="fa fa-chevron-down select-arrow"></i>
+                  </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="container">
+              <div class="row" *ngIf="form5">
+                <div class="col-2"></div>
+
+                <div class="col-8"></div>
+
+                <div class="col-2">
+                  <button
+                    type="button"
+                    id="Create_button"
+                    style="
+                      background-color: white;
+                      height: 50px;
+                      width: 200px;
+                      margin-bottom: 10px;
+                    "
+                    (click)="AddTopic()"
+                  >
+                    Create Exam
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="container">
+              <ng-container #container4></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  body{
+    background-color: #e9f1f8;
+  }
+  .dot {
+    height: 35px;
+    width: 35px;
+    background-color: rgba(248,48,203,255);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .img{
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+  }
+  .custom-button {
+    width: 200px;
+    margin-top: 20px;
+  }  

@@ -1,0 +1,159 @@
+<!--NAVBAR-->
+<mat-toolbar color="primary" style="background-color: rgb(46, 60, 84, 255);height: 110px;">
+    <mat-toolbar-row style="min-height: 40px; height: 60px">
+      <img
+        src="../../assets/images/logo.png"
+        style="height: 30px; width: 200px"
+        alt="cozentus-logo"
+      />
+      <span class="example-spacer"></span>
+      <div class="logo ml-auto justify-content-spacearound" style="display: flex">
+        <div class="circle">
+          <span
+            class="dot mr-2"
+            style="
+              color: white;
+              margin-top: 10px;
+              text-align: center;
+              width: 30px;
+              height: 30px;
+              line-height: 30px;
+            "
+            >RD</span
+          >
+        </div>
+        <div class="name">
+          <h4
+            style="
+              color: white;
+              font-weight: 100;
+              margin-top: 13px;
+              margin-left: 4px;
+              font-size: 17px;
+            "
+            class="mr-2"
+          >
+            Rudraksh Sharma
+          </h4>
+        </div>
+        <div class="downlogo">
+          <span>
+            <button
+              mat-stroked-button
+              style="background-color: transparent; color: white; border: none"
+              (click)="toggleDropdown()"
+            >
+              <img
+                src="../../assets/images/down.png"
+                style="
+                  height: 10px;
+                  width: 12px;
+                  filter: brightness(0) invert(1);
+                  margin-left: 4px;
+                  margin-top: 19px;
+                "
+                alt="down-logo"
+              />
+            </button>
+            <ul
+              class="dropdown-menu"
+              [ngStyle]="{ display: isDropdownOpen ? 'block' : 'none' }"
+            >
+              <li class="dropdown-item">
+                <button class="btn-per">
+                  <img
+                    src="../../assets/images/password.png"
+                    class="img mx-1"
+                    alt="signout"
+                  />Change Password
+                </button>
+              </li>
+              <li class="dropdown-item">
+                <button
+                  mat-stroked-button
+                  style="
+                    background-color: transparent;
+                    color: rgb(255, 255, 255);
+                    border: none;
+                  "
+                  (click)="logout()"
+                >
+                  <img
+                    src="../../assets/images/logout.png"
+                    class="img mx-1"
+                    alt="signout"
+                  />Sign Out
+                </button>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </mat-toolbar-row>
+ 
+    <mat-toolbar-row style="min-height: 40px; height: 40px;">
+      <button
+      mat-stroked-button
+      style="background-color: transparent; color: white; border: none; padding-right:15px"
+      [ngClass]="{ 'button-clicked': isHomeButtonClicked }"
+      (click)="handleButtonClick('home')"
+      routerLink="/home"
+      >
+        <img src="../../assets/images/home.png" class="img mx-2" alt="home" />Home
+      </button>
+      <button
+      mat-stroked-button
+      style="background-color: transparent; color: white; border: none; margin-left: 10px;padding-right:15px"
+      [ngClass]="{ 'button-clicked': isExamsButtonClicked }"
+      (click)="handleButtonClick('exams')"
+      routerLink="/exam"
+     
+      >
+        <img
+          src="../../assets/images/exams.png"
+          class="img mx-2"
+          alt="batch"
+        />Exams
+      </button>
+      <button
+        mat-stroked-button
+        style="
+          background-color: transparent;
+          color: white;
+          border: none;
+          margin-left: 10px;
+          padding-right:15px
+        "
+        [ngClass]="{ 'button-clicked': isAssigmentButtonClicked }"
+        (click)="handleButtonClick('assigment')"
+        routerLink="/"
+       
+        routerLink="/assignment"
+      >
+        <img
+          src="../../assets/images/assignment.png"
+          class="img mx-2"
+          alt="assignment"
+        />Assignments
+      </button>
+      <button
+        mat-stroked-button
+        style="
+          background-color: transparent;
+          color: white;
+          border: none;
+          margin-left: 10px;
+          padding-right:15px
+        "
+        data-button-id="home"
+        routerLink="/reports"
+      >
+        <img
+          src="../../assets/images/report.png"
+          class="img mx-2"
+          alt="student"
+        />Reports
+      </button>
+      <span style="margin-left: auto"></span>
+    </mat-toolbar-row>
+  </mat-toolbar>

@@ -1,0 +1,52 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  /* body{
+    background-color: #e9f1f8;
+  } */
+  .dot {
+    height: 35px;
+    width: 35px;
+    background-color: rgba(248,48,203,255);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .img{
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+  }
+  .custom-button {
+    width: 200px;
+    margin-top: 20px;
+  }
+ 
+  .dropdown-menu
+  {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 38px;
+    background-color: rgba(26, 40, 34, 200);
+ 
+   
+  }
+ 
+.dropdown-item
+{
+    background-color:rgba(26, 40, 34, 200) ;
+}
+ 
+.btn-per{
+    background-color:transparent;
+    color: aliceblue;
+    border: none;
+ 
+}
+ 
+.button-clicked {
+  background-color: #28263b !important;
+  /* background-color: red !important; */
+  padding: 5px;
+  border-radius: 5px;
+}

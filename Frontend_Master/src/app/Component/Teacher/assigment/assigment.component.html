@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+ 
+
+    <title></title>
+
+</head>
+
+<body style="background-color: rgba(238,244,251,255); ">
+
+    <div>
+        <app-navbar></app-navbar>
+    </div>
+ 
+
+<div class="content" style="background-color: rgba(238,244,251,255);;">
+
+    <h4 style="margin-left: 110px; margin-top: 15px">Assignments  ></h4>
+
+    <div
+
+      class="container"
+
+      style="
+
+        background-color: rgba(255, 255, 255, 255);
+
+        width: 100%;
+
+        height: 100%;
+
+      "
+
+    >
+
+        <div class="container">
+
+      <div class="row">
+
+            <div
+
+              class="upper my-3"
+
+              style="width: 100%; background-color: #e9f1f8"
+
+            >
+
+              <h4 style="font-weight: bolder; margin-left: 50px; margin-top: 15px;">
+
+                Please select the options below to get results
+
+              </h4>
+
+              <div class="upper my-2">
+
+                <form
+
+                  action=""
+
+                  style="display: inline-flex; margin-bottom: 20px"
+
+                >
+
+                <div class="form-group mx-5">
+
+                  <div class="position-relative">
+
+                    <select
+
+                      class="form-control"
+
+                      #form
+
+                      (change)="Click(form.value)"
+
+                      id="exampleFormControlSelect1"
+
+                      style="width: 230px"
+
+                    >
+
+                   
+
+                      <option value="" disabled selected >
+
+                        Batch Code: Batch Name
+
+                      </option>
+
+                      <option>AB101: Morning Batch</option>
+
+                      <option>DE205: Evening Batch</option>
+
+                      <option>ZF420: Night Batch</option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+               
+
+               
+
+                  <div class="form-group mx-4" *ngIf="form2">
+
+                    <select
+
+                      class="form-control"
+
+                      #form
+
+                      (change)="Click1(form.value)"
+
+                      id="exampleFormControlSelect1"
+
+                      style="width: 250px"
+
+                    >
+
+                    <option value="" disabled selected>Batch Start Date</option>
+
+                    <option>04 Jan, 2023</option>
+
+                      <option>28 Apr, 2030</option>
+
+                      <option>12 Aug, 2023</option>
+
+                    </select>
+
+                  </div>
+
+                  <div class="form-group mx-5" *ngIf="form3">
+
+                    <div class="position-relative">
+
+                    <select
+
+                      class="form-control"
+
+                      #form
+
+                      (change)="Click2(form.value)"
+
+                      id="exampleFormControlSelect1"
+
+                      style="width: 270px"
+
+                    >
+
+                    <option value="" disabled selected>Program Code: Program Name</option>
+
+                      <option>CZ291: UPSC</option>
+
+                      <option>GS200: IBPS</option>
+
+                      <option>EG089: Engineering</option>
+
+                    </select>
+
+                    <!--i class="fa fa-chevron-down select-arrow"></i-->
+
+                  </div>
+
+                </div>
+
+                  <div class="form-group mx-4" *ngIf="form4">
+
+                    <div class="position-relative">
+
+                    <select
+
+                      class="form-control"
+
+                      #form
+
+                      (change)="Click3(form.value)"
+
+                      id="exampleFormControlSelect1"
+
+                      style="width: 250px"
+
+                    >
+
+                    <option value="" disabled selected>Course Code: Course Name</option>
+
+                      <option>ER101: PHP Basics</option>
+
+                      <option>PD099: Internet of Things</option>
+
+                      <option>JL022: Spring Maverick</option>
+
+                    </select>
+
+                    <!--i class="fa fa-chevron-down select-arrow"></i-->
+
+                  </div>
+
+                </div>
+
+                </form>
+
+              </div>
+
+            </div>
+
+            <div class="container">
+
+              <div class="row" *ngIf="form5">
+
+               <div class="col-2">
+
+                </div>
+
+                <div class="col-8"></div>
+
+                <div class="col-2">
+
+                    <button type="button" id="Create_button" style="background-color: white; height: 50px; width:200px;margin-bottom: 10px;" (click)="AddTopic()">Create Assignment</button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="container">
+
+            <ng-container #container4></ng-container>
+
+        </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+

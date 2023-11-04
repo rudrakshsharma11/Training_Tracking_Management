@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+ 
+  <body>
+    <div>
+      <app-navabr></app-navabr>
+    </div>
+    <h3>Batch</h3>
+    <div class="main-con">
+      <div
+        style="
+          width: 95%;
+          height: 130px;
+ 
+          position: relative;
+          top: 20px;
+          border-radius: 5px;
+          display: flex;
+          justify-content: space-evenly;
+          left: 36px;
+        "
+      >
+        <input
+          type="text"
+          placeholder="Filter"
+          style="
+            width: 213px;
+            height: 43px;
+            position: absolute;
+            left: 5px;
+            top: 0px;
+            border: 1px solid black;
+            border-radius: 8px;
+            padding: 13px;
+            font-size: 15px;
+            font-family: sans-serif;
+          "
+        />
+        <button
+          style="
+            position: absolute;
+            right: 0px;
+            top: 1px;
+            padding: 6px;
+            margin-top: 3px;
+            width: 140px;
+            height: 43px;
+            border-radius: 10px;
+          "
+          (click)="addBatch()"
+        >
+          Add Batch
+        </button>
+      </div>
+      <div class="batch-container">
+        <div *ngFor="let batch of batches; let i = index" class="batch-entry">
+          <div style="display: flex; justify-content: space-around">
+            <span
+              style="
+                font-family: sans-serif;
+                font-weight: 600;
+                font-size: medium;
+              "
+              >Action</span
+            >
+            <span
+              style="
+                font-family: sans-serif;
+                font-weight: 600;
+                font-size: medium;
+              "
+              >Batch Code</span
+            >
+            <span
+              style="
+                font-family: sans-serif;
+                font-weight: 600;
+                font-size: medium;
+              "
+              >Batch Name</span
+            >
+            <span
+              style="
+                font-family: sans-serif;
+                font-weight: 600;
+                font-size: medium;
+              "
+              >Batch Start Date</span
+            >
+          </div>
+          <div style="position: relative; margin-left: 5px">
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Dwn-up"
+              aria-hidden="false"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+ 
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Check-up"
+              aria-hidden="false"
+              (click)="saveOrUpdateBatch()"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Wrong-up"
+              aria-hidden="false"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+ 
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Edit-up"
+              (click)="onEditClick()"
+              aria-hidden="false"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Del-up"
+              (click)="deleteBatch(i)"
+              aria-hidden="false"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+            <mat-icon
+              class="mat-icon-main"
+              svgIcon="Add-up"
+              (click)="addNestedBatch(i)"
+              aria-hidden="false"
+              aria-label="Toggle Password Visibility"
+              style="margin-right: 15px"
+            ></mat-icon>
+ 
+            <input
+              type="text"
+              style="
+                position: relative;
+                left: 86px;
+                width: 140px;
+                height: 35px;
+                border-radius: 5px;
+                border: 1px solid black;
+                text-align: center;
+              "
+              [(ngModel)]="batchCode"
+              placeholder="Batch Code"
+              *ngIf="!showBatchData"
+            />
+            <span
+              *ngIf="showBatchData"
+              style="
+                position: relative;
+                left: 135px;
+                width: 140px;
+                height: 35px;
+                text-align: center;
+              "
+              >{{ batchCode }}</span
+            >
+            {{ batch.name }}
+            <input
+              type="text"
+              style="
+                position: relative;
+                left: 227px;
+                width: 158px;
+                height: 35px;
+                border-radius: 5px;
+                border: 1px solid black;
+                text-align: center;
+              "
+              [(ngModel)]="batchName"
+              placeholder="Batch Name"
+              *ngIf="!showBatchData"
+            />
+            <span
+              *ngIf="showBatchData"
+              style="
+                position: relative;
+                left: 387px;
+                width: 158px;
+                height: 35px;
+ 
+                text-align: center;
+              "
+              >{{ batchName }}</span
+            >
+            <input
+              type="date"
+              style="
+                position: relative;
+                left: 374px;
+                width: 158px;
+                height: 35px;
+                border-radius: 5px;
+                border: 1px solid black;
+                text-align: center;
+              "
+              [(ngModel)]="batchDate"
+              *ngIf="!showBatchData"
+            />
+            <span
+              *ngIf="showBatchData"
+              style="
+                position: relative;
+                left: 640px;
+                width: 158px;
+                height: 35px;
+ 
+                text-align: center;
+              "
+              >{{ batchDate | date : "yyyy-MM-dd" }}</span
+            >
+          </div>
+ 
+          <!------------------2nd Form-------------------------------------------------------------------------------------->
+ 
+          <div
+            *ngFor="let nestedBatch of batch.nestedBatches; let j = index"
+            class="nested-batch"
+          >
+            <div style="display: flex; justify-content: space-around">
+              <span
+                style="
+                  font-family: sans-serif;
+                  font-weight: 600;
+                  font-size: medium;
+                "
+                >Action</span
+              >
+              <span
+                style="
+                  font-family: sans-serif;
+                  font-weight: 600;
+                  font-size: medium;
+                "
+                >code</span
+              >
+              <span
+                style="
+                  font-family: sans-serif;
+                  font-weight: 600;
+                  font-size: medium;
+                "
+                >Program Name</span
+              >
+ 
+              <span
+                style="
+                  font-family: sans-serif;
+                  font-weight: 600;
+                  font-size: medium;
+                "
+                >Students</span
+              >
+            </div>
+ 
+            <div style="position: relative; margin-left: 5px">
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Dwn-up"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+ 
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Check-up"
+                (click)="saveBatch2()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Wrong-up"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+ 
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Edit-up"
+                (click)="updateProgramBatch()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Del-up"
+                (click)="deleteNestedBatch(i, j)"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Add-up"
+                (click)="addNestedBatch2(i, j)"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+                style="margin-right: 15px"
+              ></mat-icon>
+ 
+ 
+ 
+              <span
+             
+              style="
+                position: relative;
+                left: 122px;
+                  width: 140px;
+                  height: 35px;
+                 
+                  text-align: center;
+              "
+              >{{ batchCode }}</span>
+ 
+              <!-- <input
+                type="text"
+                style="
+                  position: relative;
+                  left: 73px;
+                  width: 140px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="nestedBatch.name"
+                placeholder="Code"
+              /> -->
+                   
+               
+ 
+ 
+              <!-- <input
+                type="text"
+                style="
+                  position: relative;
+                  left: 192px;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="nestedBatch.startDate"
+                placeholder="Program Name"
+              /> -->
+ 
+              <div
+                style="
+                  position: relative;
+                  left: 577px;
+                  bottom: 28px;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                  cursor: pointer;
+                "
+                (click)="programToggle()"
+              >
+                <span
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                      'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+                      'Helvetica Neue', sans-serif;
+                  "
+                  >Click to select the Program</span
+                >
+                <p style="font-size: 15px; text-align: center">
+                  {{ programName }}
+                </p>
+              </div>
+              <div
+                *ngIf="programToggleStatus"
+                style="
+                  position: absolute;
+                  top: 43px;
+                  left: 590px;
+                  width: 14%;
+                  background-color: white;
+                  box-shadow: 0px 0px 5px 0px;
+                  border-radius: 5px;
+                  z-index: 9999;
+                  max-height: 200px; /* Set a maximum height for scrollability */
+                    overflow-y: auto; /* Add vertical scrollbar when content exceeds the max height */
+                "
+              >
+                <div *ngFor="let option of programData">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="selectedProgram[option.programId]"
+                      (change)="
+                        updateSelectedProgram(
+                          option.programId,
+ 
+                          option.programName
+                        )
+                      "
+                    />
+                    {{ option.programName }}
+                  </label>
+                </div>
+              </div>
+ 
+              <!-- <input
+                type="text"
+                style="
+                  position: relative;
+                  left: 978px;
+                  bottom: 40px;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                "
+                [(ngModel)]="nestedBatch.endDate"
+                placeholder="Student"
+              /> -->
+ 
+              <div
+                style="
+                  position: relative;
+                  left: 876px;
+                  bottom: 63px;
+                  width: 177px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                  cursor: pointer;
+                "
+                (click)="studentToggle()"
+              >
+                <span
+                  style="
+                    font-size: 13px;
+                    font-weight: 500;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                      'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+                      'Helvetica Neue', sans-serif;
+                  "
+                  >Click to select the Students</span
+                >
+                <p style="font-size: 15px; text-align: center">
+                  {{ studentName }}
+                </p>
+              </div>
+              <div
+                *ngIf="studentToggleStatus"
+                style="
+                  position: absolute;
+                  top: 45px;
+                  left: 892px;
+                  width: 14%;
+                  background-color: white;
+                  box-shadow: 0px 0px 5px 0px;
+                  border-radius: 5px;
+                  z-index: 9999;
+                  max-height: 200px; /* Set a maximum height for scrollability */
+                    overflow-y: auto; /* Add vertical scrollbar when content exceeds the max height */
+                "
+              >
+                <div *ngFor="let option of studentData">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="selectedStudent[option.studentId]"
+                      (change)="
+                        updateSelectedStudent(
+                          option.studentId,
+ 
+                          option.studentName
+                        )
+                      "
+                    />
+                    {{ option.studentName }}
+                  </label>
+                </div>
+              </div>
+            </div>
+ 
+            <!----------------------------3rd Form------------------------------->
+ 
+            <div
+              *ngFor="
+                let childNestedBatch of nestedBatch.childNestedBatches;
+                let k = index
+              "
+              class="child-nested-batch"
+            >
+              <div style="display: flex; justify-content: space-around">
+                <span
+                  style="
+                    font-family: sans-serif;
+                    font-weight: 600;
+                    font-size: medium;
+                  "
+                  >Action</span
+                >
+                <span
+                  style="
+                    font-family: sans-serif;
+                    font-weight: 600;
+                    font-size: medium;
+                  "
+                  >Code</span
+                >
+                <span
+                  style="
+                    font-family: sans-serif;
+                    font-weight: 600;
+                    font-size: medium;
+                  "
+                  >Course Name</span
+                >
+ 
+                <span
+                  style="
+                    font-family: sans-serif;
+                    font-weight: 600;
+                    font-size: medium;
+                  "
+                  >Teacher</span
+                >
+              </div>
+ 
+              <div style="position: relative; margin-left: 13px">
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Check-up"
+                  (click)="saveBatch3()"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                  style="margin-right: 15px"
+                ></mat-icon>
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Wrong-up"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                  style="margin-right: 15px"
+                ></mat-icon>
+ 
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Edit-up"
+                  (click)="editChildNestedBatch(i, j, k)"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                  style="margin-right: 20px"
+                ></mat-icon>
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Del-up"
+                  (click)="deleteChildNestedBatch(i, j, k)"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                  style="margin-right: 20px"
+                ></mat-icon>
+ 
+ 
+ 
+                <span
+             
+                style="
+                  position: relative;
+                    left: 122px;
+                    width: 140px;
+                    height: 35px;
+                   
+                    text-align: center;
+                "
+                >{{ batchCode }}</span>
+ 
+                <!-- <input
+                  type="text"
+                  style="
+                    position: relative;
+                    left: 73px;
+                    width: 140px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    text-align: center;
+                  "
+                  [(ngModel)]="childNestedBatch.field1"
+                  placeholder="Code"
+                /> -->
+                <!-- <input
+                  type="text"
+                  style="
+                    position: relative;
+                    left: 151px;
+                    width: 177px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    text-align: center;
+                  "
+                  [(ngModel)]="childNestedBatch.field2"
+                  placeholder="Course Name"
+                /> -->
+ 
+                <div
+                  style="
+                    position: relative;
+                    left: 468px;
+                    bottom: 29px;
+                    width: 177px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    text-align: center;
+                    cursor: pointer;
+                  "
+                  (click)="courseToggle()"
+                >
+                  <span
+                    style="
+                      font-size: 13px;
+                      font-weight: 500;
+                      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                        'Open Sans', 'Helvetica Neue', sans-serif;
+                    "
+                    >Click to select the Coures</span
+                  >
+                  <p style="font-size: 15px; text-align: center">
+                    {{ courseName }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="courseToggleStatus"
+                  style="
+                    position: absolute;
+                    top: 43px;
+                    left: 468px;
+                    width: 14%;
+                    background-color: white;
+                    box-shadow: 0px 0px 5px 0px;
+                    border-radius: 5px;
+                    z-index: 9999;
+                    max-height: 100px; /* Set a maximum height for scrollability */
+                    overflow-y: auto; /* Add vertical scrollbar when content exceeds the max height */
+                  "
+                >
+                  <div *ngFor="let option of courseData">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="selectedCourse[option.courseId]"
+                        (change)="
+                          updateSelectedCourse(
+                            option.courseId,
+ 
+                            option.courseName
+                          )
+                        "
+                      />
+                      {{ option.courseDetails.courseName }}
+                    </label>
+                  </div>
+                </div>
+ 
+                <!-- <input
+                  type="text"
+                  style="
+                    position: relative;
+                    left: 215px;
+                    width: 177px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    text-align: center;
+                  "
+                  [(ngModel)]="childNestedBatch.field3"
+                  placeholder="Teacher"
+                /> -->
+ 
+                <div
+                  style="
+                    position: relative;
+                    left: 720px;
+                    bottom: 65px;
+                    width: 177px;
+                    height: 35px;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    text-align: center;
+                    cursor: pointer;
+                  "
+                  (click)="teacherToggle()"
+                >
+                  <span
+                    style="
+                      font-size: 13px;
+                      font-weight: 500;
+                      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                        'Open Sans', 'Helvetica Neue', sans-serif;
+                    "
+                    >Click to select the teacher</span
+                  >
+                  <p style="font-size: 15px; text-align: center">
+                    {{ teacherName }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="courseToggleStatus"
+                  style="
+                    position: absolute;
+                    top: 43px;
+                    left: 720px;
+                    width: 14%;
+                    background-color: white;
+                    box-shadow: 0px 0px 5px 0px;
+                    border-radius: 5px;
+                    z-index: 9999;
+                    max-height: 100px; /* Set a maximum height for scrollability */
+                    overflow-y: auto; /* Add vertical scrollbar when content exceeds the max height */
+                  "
+                >
+                  <div *ngFor="let option of teacherData">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [(ngModel)]="selectedTeacher[option.teacherId]"
+                        (change)="
+                          updateSelectedTeacher(
+                            option.teacherId,
+ 
+                            option.teacherName
+                          )
+                        "
+                      />
+                      {{ option.teacherName }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+    <title></title>
+</head>
+ 
+<body style="background-color: rgba(238,244,251,255);overflow: auto; ">
+    <div>
+        <app-navbar></app-navbar>
+    </div>
+ 
+    <div class="content" style="background-color: rgba(238,244,251,255); width: 100%;
+    ">
+        <h4 style="margin-left: 110px; margin-top: 15px;font-size: 20px;">Home</h4>
+        <div class="container" style="
+        background-color: rgba(255, 255, 255, 255);
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+       
+      ">
+            <div class="row" >
+                <mat-tab-group  mat-align-tabs="start" >
+                    <!-- Batches and Programs-->
+                    <mat-tab label="Batches & Programs" >
+                        <div class="upper my-3" style="width: 100%; background-color: #e9f1f8;height: 115px;">
+                            <span style="font-weight: 600; margin-left: 50px;position: relative;top: 14px;font-size: 17px;">
+                                Please select the options below to get results
+                            </span>
+                            <div class="upper my-2" style="position: relative;top: 20px;">
+                                <form action="" style="display: inline-flex; margin-bottom: 20px">
+                                    <div class="form-group mx-5">
+                                        <div class="position-relative">
+                                            <select class="form-control" #form (change)="Click01(form.value);batchDateClick1()"
+                                                id="rudraksh" style="width: 230px">
+                                                <option *ngFor="let batch1 of batchdata1"  [value]="batch1.batchId"><p  style="background-color: red; width: 100%;"
+                                                    >{{ batch1.batchCode }}: {{ batch1.batchName }}</p></option>
+                                               
+                                            </select>
+                                            <i class="fa fa-chevron-down select-arrow"></i>
+                                        </div>
+                                    </div>
+ 
+                                    <div class="form-group mx-4" *ngIf="form12">
+                                        <div style="width: 200px; border: 1px solid black; height:36px; display: flex; justify-content: center; align-items: center;">
+                                            <p class="" style="height: 100%;
+                                            margin-top: 10px;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            margin-left: -35px;
+                                           ">
+                                             {{batchName1}}
+                                            </p>
+                                         </div>
+                                    </div>
+                                    <div class="form-group mx-5" *ngIf="form13">
+                                        <div class="position-relative">
+                                            <select class="form-control" #form (change)="Click12(form.value);programDateClick1()"
+                                                id="gourish" style="width: 205px">
+                                                <option *ngFor="let program of programdata1"  [value]="program.programId"><p  style="background-color: red; width: 100%;"
+                                                    >{{ program.programCode }}: {{ program.programName }}</p></option>
+                                            </select>
+                                            <i class="fa fa-chevron-down select-arrow"></i>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <ng-container #container2></ng-container>
+                        </div>
+                    </mat-tab>
+ 
+                    <!--Attendance-->
+                    <mat-tab label="Attendance">
+                        <div class="upper my-3" style="width: 100%; background-color: #e9f1f8;height: 115px;">
+                            <span style="font-weight: 600; margin-left: 50px;position: relative;top: 14px;font-size: 17px;">
+                                Please select the options below to get results
+                            </span>
+                            <div class="upper my-2" style="position: relative;top: 20px;">
+                                <form action="" style="display: inline-flex; margin-bottom: 20px">
+                                    <div class="form-group mx-5">
+                                        <div class="position-relative">
+                                            <select class="form-control" #form (change)="Click(form.value);batchDateClick()" id="education" style="width: 210px" >
+                                                <option *ngFor="let batch of batchdata"  [value]="batch.batchId"><p  style="background-color: red; width: 100%;"
+                                                    >{{ batch.batchCode }}: {{ batch.batchName }}</p></option>
+                                            </select>
+                                           
+                                            <i class="fa fa-chevron-down select-arrow"></i>
+                                        </div>
+                                        <!-- <div style="background-color: white;" class="dropdownvalues">
+                                            <div *ngFor="let batch of batchdata" >
+                                                <p (click)="batchDateClick(); Click(form.value);">{{ batch.batchCode }}: {{ batch.batchName }}</p>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                     
+                                    <div class="form-group mx-4" *ngIf="form2">
+                                        <!-- <select class="form-control" #form (change)="Click1(form.value)"
+                                            id="exampleFormControlSelect1" style="width: 250px">
+                                            <option value="" disabled selected>{{batchName}}</option>
+                                            <option>04 Jan, 2023</option>
+                                            <option>28 Apr, 2030</option>
+                                            <option>12 Aug, 2023</option>
+                                        </select> -->
+                                        <div style="width: 200px; border: 1px solid black; height:36px; display: flex; justify-content: center; align-items: center;">
+                                           <p class="" style="height: 100%;
+                                           margin-top: 10px;
+                                           display: flex;
+                                           justify-content: center;
+                                           align-items: center;
+                                           margin-left: -35px;">
+                                            {{batchName}}
+                                           </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mx-5" *ngIf="form3">
+                                        <div class="position-relative">
+                                            <select class="form-control" #form (change)="Click2(form.value);programDateClick()"
+                                                id="exampleFormControlSelect1" style="width: 205px">
+                                                <option *ngFor="let program of programdata"  [value]="program.programId"><p  style="background-color: red; width: 100%;"
+                                                    >{{ program.programCode }}: {{ program.programName }}</p></option>
+                                            </select>
+                                            <i class="fa fa-chevron-down select-arrow"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mx-4" *ngIf="form4">
+                                        <div class="position-relative">
+                                            <select class="form-control" #form (change)="Click3(form.value);courseDateClick()"
+                                            id="exampleFormControlSelect2" style="width: 213px">
+                                            <option *ngFor="let course of coursedata"  [value]="course.courseCode"><p  style="background-color: red; width: 100%;"
+                                                >{{ course.courseCode}}: {{ course.courseName }}</p></option>
+                                        </select>
+                                            <i class="fa fa-chevron-down select-arrow"></i>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row" *ngIf="form5">
+                                <div class="col-2">
+                                    <mat-form-field>
+                                      <mat-label>Select Date</mat-label>
+                                      <input
+                                        matInput
+                                        [matDatepicker]="picker"
+                                        [(ngModel)]="batch_date"
+                                        (ngModelChange)="onDateSelected($event)"
+                                        style="position: relative; top: 30px; left: 45px;"
+                                      />
+                                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                      <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                  </div>
+                                 
+                                 
+                                <div class="col-8"></div>
+                                <div class="col-2">
+                                    <button type="button"
+                                    style="margin-top: 37px;padding: 6px;width: 160px;border-radius: 5px;"
+                                    (click)="AddTopic();getNullCourseId()">Add
+                                        Topic</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <ng-container #container1></ng-container>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</body>
+ 
+</html>

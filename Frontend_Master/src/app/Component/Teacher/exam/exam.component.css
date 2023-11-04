@@ -1,0 +1,129 @@
+/* ::ng-deep .mat-tab-label {
+
+    padding: 10px !important;
+
+    justify-content: left !important;
+
+ 
+
+  }
+
+  .select-arrow {
+
+    position: absolute;
+
+    right: 12px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+  } */
+
+  .example-spacer {
+
+ 
+
+    flex: 1 1 auto;
+
+ 
+
+  }
+
+ 
+
+  body{
+
+ 
+
+    background-color: #e9f1f8;
+
+ 
+
+  }
+
+ 
+
+  .dot {
+
+ 
+
+    height: 35px;
+
+ 
+
+    width: 35px;
+
+ 
+
+    background-color: rgba(248,48,203,255);
+
+ 
+
+    border-radius: 50%;
+
+ 
+
+    display: inline-block;
+
+ 
+
+  }
+
+ 
+
+  .img{
+
+ 
+
+    width: 20px;
+
+ 
+
+    height: 20px;
+
+ 
+
+    filter: brightness(0) invert(1);
+
+ 
+
+  }
+
+ 
+
+  .custom-button {
+
+ 
+
+    width: 200px;
+
+ 
+
+    margin-top: 20px;
+
+ 
+
+  }  
+
+  mat-toolbar-row button img{
+
+    width: 20px;
+
+    height: 20px;
+
+    filter:brightness(0) invert(1);
+
+ 
+
+}
+
+::ng-deep .mat-tab-label {
+
+    padding: 10px !important;
+
+    justify-content: left !important;
+
+  }

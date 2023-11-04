@@ -1,0 +1,67 @@
+body {
+    height: 100vh;
+  width: 100%;
+  margin: 0;
+  overflow: auto;
+  background-color: rgb(233, 233, 249);
+}
+ 
+.main-con {
+    background-color:white;
+    width: 97%;
+    height: 80%;
+    position: relative;
+    /* top: 20px; */
+    left: 23px;
+    border-radius: 10px;
+}
+ 
+ 
+ 
+ 
+.batch-container {
+    margin-top: 20px;
+    position: relative;
+    bottom: 50px;
+}
+ 
+.batch-entry {
+    margin-top: 37px;
+    margin-left: 75px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+   
+    width:90% ;
+}
+ 
+.batch-entry input,
+.batch-entry button {
+    margin: 5px;
+}
+ 
+.nested-batch {
+    width: 95%;
+   
+    margin-left: 60px;
+    margin-top: 27px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+}
+ 
+.child-nested-batch {
+    width: 85%;
+    height: 110px;
+    margin-left: 140px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+.mat-icon-main{
+    cursor: pointer;
+}

@@ -1,0 +1,28 @@
+<body>
+    <div class="centered-div">
+        <div style=" width: 250px; height: 60px;position: relative;top: 20px;">
+            <img src="../../assets/logo.png" width="250px" height="40px" alt="Your Logo"
+                style="padding-top: 10px; padding-left: 10px;" />
+        </div>
+        <div style="width: 100%;height: 100%; display: flex;justify-content: center; flex-direction: column;">
+            <div style="width: 100%;">
+                <input class="form-input" placeholder="Enter Email" [(ngModel)]="username">
+                <mat-icon class="mat-icon-main"  svgIcon="User-up"
+                aria-hidden="false" aria-label="Dropdown menu"></mat-icon>
+            </div>
+            <div>
+                <input class="form-input" [type]="showPassword ? 'text' : 'password'" placeholder="Enter Password" [(ngModel)]="password">
+                <mat-icon class="mat-icon-main" (click)="togglePasswordVisibility()" svgIcon="Pass-up"
+                  aria-hidden="false" aria-label="Toggle Password Visibility"></mat-icon>
+              </div>
+             
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                <mat-checkbox style="margin-bottom: 10px;color: antiquewhite; margin-right: 230px;">Keep me signed in</mat-checkbox>
+                <button mat-raised-button
+                    style="margin-left:10px ;background-color:rgb(37, 37, 243);width: 85%;border-radius: 6px;border: none;font-size:20px ;color: aliceblue;padding: 10px;"
+                    type="submit" (click)="login()">Login</button>
+            </div>
+        </div>
+ 
+    </div>
+</body>

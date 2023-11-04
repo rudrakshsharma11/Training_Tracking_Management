@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+ 
+  <body class="Attendanceformbody">
+    <div class="container">
+      <div></div>
+ 
+      <div
+        style="margin-top: -30px"
+        class="course-form"
+      >
+        <div
+          style="display: flex; flex-direction: column; width: 100%; gap: 20px"
+        >
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              font-weight: 500;
+            "
+          >
+            <span
+              >Action
+              <i class="fa fa-sort" aria-hidden="true"></i>
+            </span>
+            <span style="width: 177px"
+              >Topic Name
+              <i class="fa fa-sort" aria-hidden="true"></i>
+            </span>
+            <span style="width: 225px"
+              >Topic Percentage Completed
+              <i class="fa fa-sort" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div style="width: 100%">
+            <div
+              *ngFor="let person of topicdata2; let i = index"
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding-bottom: 10px;
+              "
+            >
+              <span>
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Edit-up"
+                  (click)="editItem(person.topicId); toggleForm()"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                ></mat-icon>
+                <mat-icon
+                  class="mat-icon-main"
+                  svgIcon="Del-up"
+                  (click)="deleteItem(i)"
+                  aria-hidden="false"
+                  aria-label="Toggle Password Visibility"
+                ></mat-icon>
+                <input type="radio" name="somya" (click)="radioButton(person.topicId)">
+              </span>
+              <span style="width: 175px">{{ person.topicName }}</span>
+              <span style="width: 220px">{{
+                person.topicPercentageCompleted
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isFormVisible" class="course-form">
+        <div
+          style="display: flex; flex-direction: column; width: 100%; gap: 20px"
+        >
+          <div
+            style="width: 100%; display: flex; justify-content: space-between"
+            [ngStyle]="{ display: data_length > '0' ? 'none' : 'flex' }"
+          >
+            <span>Action</span>
+            <span style="width: 92px">Topic Name</span>
+            <span style="width: 256px">Topic Percentage Completed</span>
+          </div>
+          <div
+            style="
+              position: relative;
+              top: -12px;
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            "
+              *ngIf="!is_edited_show"
+          >
+            <div>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Check-up"
+                (click)="submitPopup(); submitTableData(); toggleForm()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Wrong-up"
+                (click)="toggleForm()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+            </div>
+ 
+            <!-- <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 170px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                  margin-right: 23px;
+                "
+                [(ngModel)]="field1Value"
+                placeholder="Enter Topic"
+              /> -->
+ 
+            <div class="form-group mx-5">
+              <div class="position-relative">
+                <select
+                  class="form-control"
+                  #form
+                  (change)="topicDateClick()"
+                  id="education1"
+                  style="width: 210px"
+                >
+                  <option
+                    *ngFor="let topic of topicdata"
+                    [value]="topic.topicId"
+                  >
+                    <p style="background-color: red; width: 100%">
+                      {{ topic.topicName }}
+                    </p>
+                  </option>
+                </select>
+ 
+                <i class="fa fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+ 
+            <div>
+              <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 170px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                  margin-right: 67px;
+                "
+                [(ngModel)]="field2Value"
+                placeholder="Enter Topic %"
+              />
+            </div>
+          </div>
+          <div
+            style="
+              position: relative;
+              top: -12px;
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            "
+            *ngIf="is_edited_show"
+          >
+            <div>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Check-up"
+                (click)="submitPopup(); submitTableData1();"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+              <mat-icon
+                class="mat-icon-main"
+                svgIcon="Wrong-up"
+                (click)="toggleForm()"
+                aria-hidden="false"
+                aria-label="Toggle Password Visibility"
+              ></mat-icon>
+            </div>
+ 
+            <!-- <input
+              type="text"
+              style="
+                position: relative;
+                width: 170px;
+                height: 35px;
+                border-radius: 5px;
+                border: 1px solid black;
+                text-align: center;
+                margin-right: 23px;
+              "
+              [(ngModel)]="field1Value"
+              placeholder="Enter Topic"
+            /> -->
+ 
+            <div class="form-group mx-5">
+              <div class="position-relative">
+                <select
+                  class="form-control"
+                  #form
+                  (change)="topicDateClick()"
+                  id="education1"
+                  style="width: 210px"
+                >
+                  <option
+                    *ngFor="let topic of topicdata"
+                    [value]="topic.topicId"
+                  >
+                    <p style="background-color: red; width: 100%">
+                      {{editpercentagetopicname}}
+                    </p>
+                  </option>
+                </select>
+ 
+                <i class="fa fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+ 
+            <div>
+              <input
+                type="text"
+                style="
+                  position: relative;
+                  width: 170px;
+                  height: 35px;
+                  border-radius: 5px;
+                  border: 1px solid black;
+                  text-align: center;
+                  margin-right: 67px;
+                "
+                [(ngModel)]="editpercentageValue"
+                placeholder="Enter Topics %"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 20px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            background-color: #f3f3f3;
+            font-weight: 500;
+            padding-top: 2px;
+            padding-bottom: 15px;
+            width: 100%;
+            margin-top: 30px;
+          "
+        >
+          <span
+            style="
+              width: 150px;
+              margin-left: 70px;
+              padding-top: 15px;
+              font-size: 17px;
+              font-weight: 500;
+            "
+          >
+            Students
+          </span>
+          <span
+            style="
+              margin-left: 55px;
+              padding-top: 15px;
+              font-weight: 500;
+              font-size: 17px;
+            "
+          >
+            Attendance
+          </span>
+          <!-- Save and Cancel buttons -->
+          <button style="margin-left: auto; margin-right: 95px" (click)="postAttendence()">Save</button>
+          <button style="margin-right: 57px">Cancel</button>
+        </div>
+        <div >
+          <div *ngFor="let data of studentData; let i = index">
+            <div
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                padding-top: 5px;
+                padding-bottom: 20px;
+                font-size: 14px;
+                background-color: #fdfdff;
+                margin-left: 70px;
+              "
+            >
+              <div style="width: 150px; font-family: sans-serif">
+                {{ data.studentName }}
+              </div>
+              <div>
+                <input type="checkbox" style="margin-left: 87px" name="somya2" (click)="selectButton(data.studentId)"/>
+ 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
