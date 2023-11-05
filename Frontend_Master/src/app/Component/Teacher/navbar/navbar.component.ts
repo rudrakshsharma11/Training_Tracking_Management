@@ -48,7 +48,13 @@ export class NavbarComponent  {
   }
  
   logout(): void {
-    this.loginService.clearLoginData();
+    // Remove jwtToken and User_Role from local storage
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('User_Role');
+    
+    // Optionally, you can also clear any other data or perform additional logout actions
+  
+    // Navigate to the home page
     this.router.navigate(['']);
   }
  

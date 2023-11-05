@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 import { NgIfContext } from '@angular/common';
+
+import axios from 'axios';
+import { environment } from 'src/environments/environment';
 
 const check_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`;
 
@@ -27,7 +30,7 @@ const Edit_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox=
 
   styleUrls: ['./exam-table.component.css'],
 })
-export class ExamTableComponent {
+export class ExamTableComponent  implements OnInit{
   // Dropdown options
 
   // dropdownOptions: { label: string, value: string }[] = [
@@ -123,6 +126,7 @@ export class ExamTableComponent {
 
     // secodepopupInput: ""
   };
+  studentArray:any=[];
 
   people: any[] = JSON.parse(
     localStorage.getItem('add_exam_details') || '[]'
@@ -136,6 +140,8 @@ export class ExamTableComponent {
   batchIdm: string | null;
   courseIdm: string | null;
   programIdm: string | null;
+  examData: any;
+  studentData: any;
 
   constructor(
     iconRegistry: MatIconRegistry,
@@ -172,6 +178,58 @@ export class ExamTableComponent {
     const courseId = localStorage.getItem('courseId_exam');
     console.log("course Id:-",batchId);
     this.courseIdm=courseId;
+  }
+
+  ngOnInit(): void {
+    // Check if response data is available, and if so, pass it to getTopicByCourse
+    // if (this.topicdata) {
+    //   this.getTopicByCourse(this.topicdata);
+    // }
+    // this.getTopicNotNull();
+    this.getExamlist();
+    this.getStudentlist();
+  }
+
+  getExamlist() {
+    const token = localStorage.getItem('jwtToken');
+    axios
+      .get(`${environment.apiURL}/exam/getExams`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+      .then((response) => {
+        // Handle the successful response here
+        this.examData = response.data;
+        console.log('this.Assigment DATA:-', this.examData);
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error('Error:', error);
+      });
+  }
+
+  getStudentlist() {
+    const token = localStorage.getItem('jwtToken');
+    axios
+      .get(`${environment.apiURL}/student/show/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+      .then((response) => {
+        // Handle the successful response here
+        this.studentData = response.data;
+        console.log('this.Student DATA:-', this.studentData);
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error('Error:', error);
+      });
   }
 
  
@@ -319,7 +377,7 @@ export class ExamTableComponent {
         localStorage.getItem('add_exam_details') || '[]'
       ).length;
 
-      this.showList();
+      // this.showList();
 
       this.resetFields();
 
@@ -327,41 +385,33 @@ export class ExamTableComponent {
 
       // this.isFormVisible = false;
     } else {
-      // this.inputData.dropdwon = this.selectedDropdownValue;
-
-      this.inputData.input1 = this.field1Value;
-
-      this.inputData.input2 = this.field2Value;
-
-      this.inputData.input3 = this.field3Value;
-
-      this.inputData.input4 = this.field4Value;
-
-      this.inputData.file_name = this.file_name;
-
-      this.tableData.push(this.inputData);
-
-      let details = JSON.parse(
-        localStorage.getItem('add_exam_details') || '[]'
-      );
-
-      details.push(this.inputData);
-
-      localStorage.setItem('add_exam_details', JSON.stringify(details));
-
-      this.data_length = JSON.parse(
-        localStorage.getItem('add_exam_details') || '[]'
-      ).length;
-
-      console.log('details', localStorage.getItem('add_exam_details'));
-
-      this.showList();
-
-      this.resetFields();
-    }
-
+      const postData = {
+        submissionDate: this.field3Value,
+        evaluationName: this.field1Value,
+        totalMarks: this.field2Value,
+        courseId: localStorage.getItem('courseId_exam'),
+        batchId: localStorage.getItem('batchId'),
+      };
+      const token = localStorage.getItem('jwtToken');
+      axios
+        .post(`${environment.apiURL}/exam/addExam`, postData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
+        })
+        .then((response) => {
+          console.log('POST request successful for percentage');
+          console.log('Response data:', response.data);
+          this.getExamlist();
+        })
+        .catch((error) => {
+          console.error('Error making POST request:', error);
+        });
     // Do whatever you need with the table data
   }
+}
 
   // write()
 
@@ -567,5 +617,13 @@ export class ExamTableComponent {
     console.log('Cancel clicked');
 
     this.isTableVisible = false;
+  }
+
+  onChangeValue(index:any,$event:any){
+    if(!this.studentArray.includes(index)){
+       this.studentArray.push(index); 
+    }
+    console.log("hello",index,$event.target.value)
+    console.log("studentArray",this.studentArray)
   }
 }

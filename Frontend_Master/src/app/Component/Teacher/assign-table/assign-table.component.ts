@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 import { NgIfContext } from '@angular/common';
+
+import axios from 'axios';
+import { environment } from 'src/environments/environment';
 
 const check_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`;
 
@@ -27,7 +30,7 @@ const Edit_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox=
 
   styleUrls: ['./assign-table.component.css'],
 })
-export class AssignTableComponent {
+export class AssignTableComponent implements OnInit {
   // Dropdown options
 
   // dropdownOptions: { label: string, value: string }[] = [
@@ -92,10 +95,6 @@ export class AssignTableComponent {
 
   field4Value: string = '';
 
-  // somya: string = "";
-
-  // rud:string="";
-
   index: number = 0;
 
   isdata_deleted: boolean = false;
@@ -133,6 +132,7 @@ export class AssignTableComponent {
     : 0;
 
   selectedFileName: string | undefined;
+  assigmentData: any;
 
   constructor(
     iconRegistry: MatIconRegistry,
@@ -160,93 +160,41 @@ export class AssignTableComponent {
     );
   }
 
+  ngOnInit(): void {
+    // Check if response data is available, and if so, pass it to getTopicByCourse
+    // if (this.topicdata) {
+    //   this.getTopicByCourse(this.topicdata);
+    // }
+    // this.getTopicNotNull();
+    this.getAssigmentlist();
+  }
+
+  getAssigmentlist() {
+    const token = localStorage.getItem('jwtToken');
+    axios
+      .get(`${environment.apiURL}/assignment/getAssignments`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+      .then((response) => {
+        // Handle the successful response here
+        this.assigmentData = response.data;
+        console.log('this.Assigment DATA:-', this.assigmentData);
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error('Error:', error);
+      });
+  }
+
   // Toggle form visibility
 
   toggleForm() {
     this.isFormVisible = !this.isFormVisible;
   }
-
-  // Open pop-up
-
-  // openPopup() {
-
-  //   this.isPopupVisible = true;
-
-  // }
-
-  // Open second pop-up
-
-  // openSecondPopup() {
-
-  //   this.isSecondPopupVisible = true;
-
-  // }
-
-  // Submit data from first pop-up
-
-  // submitPopup() {
-
-  //   this.inputData.input1 = this.field1Value
-
-  //   this.inputData.input2 = this.field2Value
-
-  //   this.inputData.input3 = this.field3Value
-
-  //   this.inputData.input4 = this.field4Value
-
-  //   // this.inputData.firstpopupInput = this.popupInput;
-
-  //   // this.somya = this.popupInput;
-
-  //   // this.inputData.dropdwon = this.selectedDropdownValue;
-
-  //   // this.rud=this.secondPopupInput;
-
-  //   // this.closePopup();
-
-  //   // this.resetFields();
-
-  //   console.log("data comming",this.field1Value)
-
-  //   console.log("result", this.inputData)
-
-  // }
-
-  // Submit data from second pop-up
-
-  // submitSecondPopup() {
-
-  //   this.inputData.secodepopupInput = this.secondPopupInput;
-
-  //   this.rud=this.secondPopupInput;
-
-  //   this.closeSecondPopup();
-
-  //   console.log("result", this.inputData)
-
-  // }
-
-  // Close pop-up
-
-  // closePopup() {
-
-  //   this.isPopupVisible = false;
-
-  //   this.popupInput = '';
-
-  // }
-
-  // Close second pop-up
-
-  // closeSecondPopup() {
-
-  //   this.isSecondPopupVisible = false;
-
-  //   this.secondPopupInput = ''; // Reset the input field
-
-  // }
-
-  // Reset input fields
 
   resetFields() {
     this.field1Value = '';
@@ -272,8 +220,6 @@ export class AssignTableComponent {
 
   submitTableData() {
     if (this.isdata_deleted) {
-      // this.inputData.dropdwon = this.selectedDropdownValue;
-
       this.inputData.input1 = this.field1Value;
 
       this.inputData.input2 = this.field2Value;
@@ -281,12 +227,6 @@ export class AssignTableComponent {
       this.inputData.input3 = this.field3Value;
 
       this.inputData.input4 = this.field4Value;
-
-      // this.inputData.firstpopupInput = this.popupInput;
-
-      // this.inputData.dropdwon = this.selectedDropdownValue;
-
-      // console.log("data", this.selectedDropdownValue);
 
       let details = JSON.parse(
         localStorage.getItem('add_assign_details') || '[]'
@@ -316,40 +256,30 @@ export class AssignTableComponent {
 
       // this.isFormVisible = false;
     } else {
-      // this.inputData.dropdwon = this.selectedDropdownValue;
-
-      this.inputData.input1 = this.field1Value;
-
-      this.inputData.input2 = this.field2Value;
-
-      this.inputData.input3 = this.field3Value;
-
-      this.inputData.input4 = this.field4Value;
-
-      this.inputData.file_name = this.file_name;
-
-      this.tableData.push(this.inputData);
-
-      let details = JSON.parse(
-        localStorage.getItem('add_assign_details') || '[]'
-      );
-
-      details.push(this.inputData);
-
-      localStorage.setItem('add_assign_details', JSON.stringify(details));
-
-      this.data_length = JSON.parse(
-        localStorage.getItem('add_assign_details') || '[]'
-      ).length;
-
-      console.log('details', localStorage.getItem('add_assign_details'));
-
-      this.showList();
-
-      this.resetFields();
+      const postData = {
+        submissionDate: this.field3Value,
+        evaluationName: this.field1Value,
+        totalMarks: this.field2Value,
+        courseId: localStorage.getItem('courseId_exam'),
+        batchId: localStorage.getItem('batchId'),
+      };
+      const token = localStorage.getItem('jwtToken');
+      axios
+        .post(`${environment.apiURL}/assignment/addAssignment`, postData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
+        })
+        .then((response) => {
+          console.log('POST request successful for percentage');
+          console.log('Response data:', response.data);
+        })
+        .catch((error) => {
+          console.error('Error making POST request:', error);
+        });
     }
-
-    // Do whatever you need with the table data
   }
 
   // write()

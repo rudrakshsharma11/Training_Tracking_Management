@@ -360,7 +360,7 @@
 
       <div
         style="margin-top: 12px"
-        [ngStyle]="{ display: people.length > 0 ? 'block' : 'none' }"
+        
       >
         <table class="horizontal-table">
           <thead>
@@ -373,14 +373,14 @@
 
               <th style="width: 300px">Date</th>
 
-              <th style="width: 300px">Time</th>
+              <!-- <th style="width: 300px">Time</th> -->
 
               <th style="width: 300px">Files</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr *ngFor="let person of people; let i = index">
+            <tr *ngFor="let person of examData; let i = index">
               <td>
                 <mat-icon
                   class="mat-icon-main"
@@ -408,13 +408,13 @@
                 >
               </td>
 
-              <td>{{ person.input1 }}</td>
+              <td>{{ person.evaluationName}}</td>
 
-              <td>{{ person.input2 }}</td>
+              <td>{{ person.totalMarks }}</td>
 
-              <td>{{ person.input3 }}</td>
+              <td>{{ person.submissionDate}}</td>
 
-              <td>{{ person.input4 }}</td>
+              <!-- <td>{{ person.input4 }}</td> -->
 
               <td>{{ person.file_name }}</td>
 
@@ -467,13 +467,14 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let student of students; let i = index">
+        <tr *ngFor="let student of studentData; let i = index">
           <td>
-            <span>{{ student.name }}</span>
+            <span>{{ student.studentName
+            }}</span>
           </td>
 
           <td>
-            <span>{{ student.marks }}</span>
+            <input (input)="onChangeValue(student.studentId,$event)"/>
           </td>
         </tr>
       </tbody>
