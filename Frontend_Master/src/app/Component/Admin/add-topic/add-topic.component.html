@@ -275,35 +275,33 @@
                   padding-top: 80px;
                 "
               >
-                <h1 style="text-align: center; margin-top: -26px">
-                  Drag & Drop your Files or
- 
-                  <!-- Replace the hyperlink with a custom file input styled as a button -->
- 
-                  <label for="fileInput" class="custom-file-upload">
-                    Upload
- 
-                    <input
-                      type="file"
-                      required
-                      (change)="handleFileUpload($event)"
-                      id="fileInput"
-                      style="display: none"
-                    />
- 
-                    <!-- <form id="fileUploadForm" enctype="multipart/form-data">
-                        <input
-                          type="file"
-                          required
-                          (change)="handleFileUpload($event)"
-                          id="fileInput"
-                        />
-                        <button type="submit">Upload File</button>
-                      </form> -->
- 
- 
-                  </label>
-                </h1>
+              <h1 style="text-align: center; margin-top: -26px">
+                Drag & Drop your Files or
+
+                <!-- Replace the hyperlink with a custom file input styled as a button -->
+
+                <label for="fileInput" class="custom-file-upload">
+                  Upload
+
+                  <input
+                    type="file"
+                    required
+                    accept="image/*,.pdf"
+                    (change)="onFileSelected($event)"
+                    (change)="handleFileUpload($event)"
+                    id="fileInput"
+                    style="display: none"
+                  />
+                  <input
+                  type="file"
+                  accept="image/*,.pdf"
+                  (change)="onFileSelected($event)"
+                  #fileInput
+                  style="display: none"
+                />
+                <button (click)="openFileSelector()">Upload Files</button>
+                </label>
+              </h1>
               </div>
  
               <h2

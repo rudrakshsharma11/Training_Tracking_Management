@@ -34,10 +34,15 @@ export class LoginComponent {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     }
+
+
  
    
    
- 
+  logValues() {
+    console.log('Username:', this.username);
+    console.log('Password:', this.password);
+  }
  
  
  

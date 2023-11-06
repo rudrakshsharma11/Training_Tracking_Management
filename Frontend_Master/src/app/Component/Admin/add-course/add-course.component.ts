@@ -267,8 +267,8 @@ export class AddCourseComponent implements OnInit {
       html: `
       <div>
         <h2>Delete Course</h2>
-        <hr style="margin: 10px 0;>
-        <p">Are you sure that you want to delete this Course?</p>
+        <hr style="margin: 10px 0;">
+        <p>Are you sure that you want to delete this Course?</p>
       </div>
     `,
       showCancelButton: true,
@@ -279,14 +279,18 @@ export class AddCourseComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const token = localStorage.getItem('jwtToken');
+  
+        // Set the headers correctly
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
+        };
+  
         axios
-          .post(`${environment.apiURL}/course/delete/${index}`,{
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': '*',
-            },
-          })
+          .post(`${environment.apiURL}/course/delete/${index}`, null, config) // Pass null as the request payload
           .then((response) => {
             console.log(response);
             Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
@@ -298,6 +302,8 @@ export class AddCourseComponent implements OnInit {
       }
     });
   }
+  
+  
 
   editItem(index: number) {
     // this.isdata_deleted = true;

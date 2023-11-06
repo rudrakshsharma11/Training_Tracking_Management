@@ -10,7 +10,7 @@ import { AddTeacherComponent } from './Component/Admin/add-teacher/add-teacher.c
 import { AddTopicComponent } from './Component/Admin/add-topic/add-topic.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,7 +19,7 @@ import {MatMenuModule} from '@angular/material/menu';
 
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
-
+import { HttpClient } from '@angular/common/http';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -75,7 +75,9 @@ import { AssignTableComponent } from './Component/Teacher/assign-table/assign-ta
     MatInputModule,
     MatNativeDateModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HttpClientModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

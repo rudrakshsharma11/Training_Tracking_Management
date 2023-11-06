@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -12,6 +12,9 @@ import { NgIfContext } from '@angular/common';
 
 import axios from 'axios';
 import { environment } from 'src/environments/environment';
+
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const check_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`;
 
@@ -133,8 +136,11 @@ export class AssignTableComponent implements OnInit {
 
   selectedFileName: string | undefined;
   assigmentData: any;
+  httpClient: any;
 
   constructor(
+    private http:HttpClient,private router:Router,
+
     iconRegistry: MatIconRegistry,
 
     sanitizer: DomSanitizer
@@ -382,171 +388,13 @@ export class AssignTableComponent implements OnInit {
     this.isUploadModalVisible = false; // Set the flag to hide the modal
   }
 
-  // handleFileInput(event: any) {
 
-  //   this.selectedFile = event.target.files[0];
-
-  // }
-
-  // uploadFile() {
-
-  //   if (this.selectedFile && this.currentRowIndex !== -1) {
-
-  //     const id = this.tableData[this.currentRowIndex].id;
-
-  //     if (!this.uploadedFiles[id]) {
-
-  //       this.uploadedFiles[id] = [];
-
-  //     }
-
-  //     this.uploadedFiles[id].push(this.selectedFile);
-
-  //     console.log('File uploaded for ID:', id);
-
-  //     this.closeUploadModal();
-
-  //   }
-
-  // }
-
-  // onFileSelected(event:any):void{
-
-  //   this.selectedFile=event.target.files[0]as File;
-
-  //   this.displayFileName(this.selectedFile);
-
-  // }
-
-  // displayFileName(file:File|null):void{
-
-  //   const fileNameElement =document.getElementById('file-name');
-
-  //   if(file&&fileNameElement){
-
-  //     const fileName = file.name;
-
-  //     fileNameElement.textContent=fileName;
-
-  //   }
-
-  //   else if(fileNameElement){
-
-  //     fileNameElement.textContent='';
-
-  //   }
-
-  //   }
-
-  //   uploadFile():void{
-
-  //     if(this.selectedFile){
-
-  //       console.log('Selected File Name',this.selectedFile.name);
-
-  //       const fileReader = new FileReader();
-
-  //       fileReader.onload=()=>{
-
-  //         localStorage.setItem('uploadFile',fileReader.result as string);
-
-  //         console.log('File stored in local;  storage');
-
-  //       };
-
-  //       fileReader.readAsDataURL(this.selectedFile);
-
-  //     }
-
-  //     if(this.selectedFile){
-
-  //       this.uploadedFiles.push(this.selectedFile);
-
-  //       this.selectedFile= null;
-
-  //       console.log('Uploaded Files:',this.uploadedFiles);
-
-  //    const uploadedFileData ={
-
-  //     fileName:this.selectedFile.name,
-
-  //     fileSize:this.selectedFile.size
-
-  //    };
-
-  //    this.tableData.push(uploadedFileData);
-
-  //    this.closeUploadModal();
-
-  //     }
-
-  //   }
-
-  // Handle file input change
 
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
-  // Function to upload the selected file
 
-  //uploadFile() {
-
-  // You can implement the file upload logic here
-
-  // if (this.selectedFile ) {
-
-  //   // Handle the file upload process
-
-  //   // You can send the file to a server, save it, etc.
-
-  //   // After successful upload, you can close the modal
-
-  //   const newData = {
-
-  //     input1: this.field1Value,
-
-  //     input2: this.field2Value,
-
-  //     input3: this.field3Value,
-
-  //     input4: this.field4Value,
-
-  //     selectedFileName: this.selectedFile
-
-  //   };
-
-  //   this.people.push(newData);
-
-  //   this.field1Value = '';
-
-  //   this.field2Value = '';
-
-  //   this.field3Value = '';
-
-  //   this.field4Value = '';
-
-  //   this.selectedFileName = '';
-
-  //   if(this.selectedFile && this.currentRowIndex !== -1){
-
-  //     const id = this.tableData[this.currentRowIndex].id;
-
-  //     if(!this.uploadedFiles[id]){
-
-  //       this.uploadedFiles[id] =[];
-
-  //     }
-
-  //     this.uploadedFiles[id].push(this.selectedFile);
-
-  //     console.log('File uploaded for id',id);
-
-  //     this.closeUploadModal();
-
-  //   }
-
-  // }
 
   // Upload the selected file
 
@@ -647,4 +495,55 @@ export class AssignTableComponent implements OnInit {
 
     this.isTableVisible = false;
   }
+
+  upload(formData: FormData) {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    // Specify the response type as text
+    return this.http.post(`${environment.apiURL}/topic/uploadfile`, formData, {
+      headers,
+      responseType: 'text' // Set the response type to 'text'
+    });
+  }
+  
+
+  file: any[] = [];
+  uploadedFileName: string = '';
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+    this.file.push(event.target.files[0]);
+  
+    if (selectedFile) {
+      this.uploadedFileName = selectedFile.name;
+      console.log('Selected File: ', this.uploadedFileName);
+    }
+  
+    const formData = new FormData();
+    formData.append('file', this.file[this.file.length - 1]);
+  
+    this.upload(formData).subscribe(
+      (res: any) => {
+        console.log(res);
+        // Handle the success message as text
+        console.log('File uploaded successfully:', res);
+  
+        // Clear the file input
+        this.fileInput.nativeElement.value = '';
+      },
+      (error: any) => {
+        console.error('Error:', error);
+        // Handle the error
+      }
+    );
+  }
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  openFileSelector() {
+    this.fileInput.nativeElement.click();
+  }
+ 
 }
+

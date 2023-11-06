@@ -254,32 +254,76 @@ export class AddProgramComponent implements OnInit {
     this.people = JSON.parse(localStorage.getItem('add_program_details') || '[]');
   }
 
+  // deleteItem(indexNumber: number) {
+  //   console.log(indexNumber);
+  //   Swal.fire({
+  //     html: `
+  //     <div>
+  //       <h2>Delete Program</h2>
+  //       <hr style="margin: 10px 0;>
+  //       <p">Are you sure that you want to delete this Program?</p>
+  //     </div>
+  //   `,
+  //   showCancelButton: true,
+  //   confirmButtonColor: 'primary',
+  //   cancelButtonColor: 'basic',
+  //   confirmButtonText: 'Yes',
+  //   cancelButtonText: 'No'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const token = localStorage.getItem('jwtToken');
+  //       axios
+  //         .post(`${environment.apiURL}/program/delete/${indexNumber}`,{
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             'Access-Control-Allow-Origin': '*',
+  //             'Access-Control-Allow-Headers': '*',
+  //           },
+  //         })
+  //         .then((response) => {
+  //           console.log(response);
+  //           Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
+  //           this.GetData();
+  //         })
+  //         .catch((error) => {
+  //           console.log('error', error);
+  //         });
+  //     }
+  //   });
+  // }
+
+
+
+
   deleteItem(indexNumber: number) {
-    console.log(indexNumber);
     Swal.fire({
       html: `
       <div>
-        <h2>Delete Program</h2>
-        <hr style="margin: 10px 0;>
-        <p">Are you sure that you want to delete this Program?</p>
+        <h2>Delete Course</h2>
+        <hr style="margin: 10px 0;">
+        <p>Are you sure that you want to delete this Course?</p>
       </div>
     `,
-    showCancelButton: true,
-    confirmButtonColor: 'primary',
-    cancelButtonColor: 'basic',
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'No'
+      showCancelButton: true,
+      confirmButtonColor: 'primary',
+      cancelButtonColor: 'basic',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         const token = localStorage.getItem('jwtToken');
+  
+        // Set the headers correctly
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
+        };
+  
         axios
-          .post(`${environment.apiURL}/program/delete/${indexNumber}`,{
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': '*',
-            },
-          })
+          .post(`${environment.apiURL}/program/delete/${indexNumber}`, null, config) // Pass null as the request payload
           .then((response) => {
             console.log(response);
             Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
@@ -291,7 +335,6 @@ export class AddProgramComponent implements OnInit {
       }
     });
   }
-
   editItem(index: number) {
     this.GetDataById(index);
     this.indexNumber = index;

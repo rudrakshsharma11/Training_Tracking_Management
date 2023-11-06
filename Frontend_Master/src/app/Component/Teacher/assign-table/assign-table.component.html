@@ -166,6 +166,7 @@
                 />
               </button>
             </td>
+           
 
             <!-- <td>
 
@@ -230,10 +231,20 @@
                     <input
                       type="file"
                       required
+                      accept="image/*,.pdf"
+                      (change)="onFileSelected($event)"
                       (change)="handleFileUpload($event)"
                       id="fileInput"
                       style="display: none"
                     />
+                    <input
+                    type="file"
+                    accept="image/*,.pdf"
+                    (change)="onFileSelected($event)"
+                    #fileInput
+                    style="display: none"
+                  />
+                  <button (click)="openFileSelector()">Upload Files</button>
                   </label>
                 </h1>
               </div>
@@ -414,7 +425,7 @@
 
               <td>{{ person.submissionDate}}</td>
 
-              <!-- <td>{{ person.input4 }}</td> -->
+             
 
               <td>{{ person.file_name }}</td>
 

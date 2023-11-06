@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -12,6 +12,9 @@ import { NgIfContext } from '@angular/common';
 
 import axios from 'axios';
 import { environment } from 'src/environments/environment';
+
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const check_Icon = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`;
 
@@ -144,6 +147,7 @@ export class ExamTableComponent  implements OnInit{
   studentData: any;
 
   constructor(
+    private http:HttpClient,private router:Router,
     iconRegistry: MatIconRegistry,
 
     sanitizer: DomSanitizer
@@ -214,7 +218,7 @@ export class ExamTableComponent  implements OnInit{
   getStudentlist() {
     const token = localStorage.getItem('jwtToken');
     axios
-      .get(`${environment.apiURL}/student/show/all`, {
+      .get(`${environment.apiURL}/student/show/uniqueByStudentCode`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Access-Control-Allow-Origin': '*',
@@ -625,5 +629,55 @@ export class ExamTableComponent  implements OnInit{
     }
     console.log("hello",index,$event.target.value)
     console.log("studentArray",this.studentArray)
+  }
+
+
+  upload(formData: FormData) {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    // Specify the response type as text
+    return this.http.post(`${environment.apiURL}/topic/uploadfile`, formData, {
+      headers,
+      responseType: 'text' // Set the response type to 'text'
+    });
+  }
+  
+
+  file: any[] = [];
+  uploadedFileName: string = '';
+
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+    this.file.push(event.target.files[0]);
+  
+    if (selectedFile) {
+      this.uploadedFileName = selectedFile.name;
+      console.log('Selected File: ', this.uploadedFileName);
+    }
+  
+    const formData = new FormData();
+    formData.append('file', this.file[this.file.length - 1]);
+  
+    this.upload(formData).subscribe(
+      (res: any) => {
+        console.log(res);
+        // Handle the success message as text
+        console.log('File uploaded successfully:', res);
+  
+        // Clear the file input
+        this.fileInput.nativeElement.value = '';
+      },
+      (error: any) => {
+        console.error('Error:', error);
+        // Handle the error
+      }
+    );
+  }
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  openFileSelector() {
+    this.fileInput.nativeElement.click();
   }
 }

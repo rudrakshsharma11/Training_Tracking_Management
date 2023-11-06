@@ -259,28 +259,70 @@ export class AddTeacherComponent  implements OnInit {
  
  
  
-  deleteItem(indexNumber: number) {
-    console.log(indexNumber);
+  // deleteItem(indexNumber: number) {
+  //   console.log(indexNumber);
  
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: `Delete the item  with Program value `,
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#d33',
+  //     cancelButtonColor: '#3085d6',
+  //     confirmButtonText: 'Yes, delete it!',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const token = localStorage.getItem('jwtToken');
+  //       axios
+  //         .post(`${environment.apiURL}/teacher/delete/${indexNumber}`,{
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             'Access-Control-Allow-Origin': '*',
+  //             'Access-Control-Allow-Headers': '*',
+  //           },
+  //         })
+  //         .then((response) => {
+  //           console.log(response);
+  //           Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
+  //           this.GetData();
+  //         })
+  //         .catch((error) => {
+  //           console.log('error', error);
+  //         });
+  //     }
+  //   });
+  // }
+
+
+  deleteItem(indexNumber: number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: `Delete the item  with Program value `,
-      icon: 'warning',
+      html: `
+      <div>
+        <h2>Delete Course</h2>
+        <hr style="margin: 10px 0;">
+        <p>Are you sure that you want to delete this Course?</p>
+      </div>
+    `,
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: 'primary',
+      cancelButtonColor: 'basic',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         const token = localStorage.getItem('jwtToken');
+  
+        // Set the headers correctly
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
+        };
+  
         axios
-          .post(`${environment.apiURL}/teacher/delete/${indexNumber}`,{
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': '*',
-            },
-          })
+          .post(`${environment.apiURL}/teacher/delete/${indexNumber}`, null, config) // Pass null as the request payload
           .then((response) => {
             console.log(response);
             Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
